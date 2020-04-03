@@ -3,13 +3,14 @@ import discord
 import CobraMusic
 import asyncio
 import hidden_token
+import xp_file
 ws_url = 'ws://Guesser-Cluster.scoder12.repl.co'
 guess_url = 'https://guess-it.scoder12.repl.co/guess'
 
 voiceclient = discord.VoiceClient
 client = discord.Client()
 
-BANNED_WORDS = ["pd","nigga","fdp","enculé","encule","connard","salope","pute"]
+BANNED_WORDS = ["pd","nigga","fdp","enculé","encule","connard","salope","pute","con"]
 
 BONJOUR = ["bonjour","salut","bonsoir","yo","hello","salam","shalom","hola","hi","hey"]
 
@@ -66,6 +67,18 @@ async def on_message(message):
         await help_msg
         
 # Début du système d'xp
+
+    if message.author != client.user:
+        xp_file.xp += 1
+        if message.content.startswith("!xp"):
+            await message.channel.send(member_name + " tu as " + str(xp_file.xp) + "xp")
+            
+        if xp_file.xp == 10:
+            xp_file.level += 1
+            xp_file.xp = 0
+            
+        if message.content.startswith("!level"):    
+            await message.channel.send("Bien joué " + member_name + " tu es niveau " + str(xp_file.level))
     
     
 
